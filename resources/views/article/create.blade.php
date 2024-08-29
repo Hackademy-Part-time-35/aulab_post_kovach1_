@@ -9,12 +9,12 @@
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8">
-                <form action="" class="card p-5 shadow" enctype="multipart/form-data">
+                <form action="{{route('article.store')}}" method="POST" class="card p-5 shadow" enctype="multipart/form-data">
                     @csrf
                     <!-- Campo Titolo -->
                     <div class="mb-3">
                         <label for="title" class="form-label">Titolo</label>
-                        <input type="text" name="title" class="form-control" id="title" value="{{ old('title') }}">
+                        <input type="text" name="title" class="form-control" id="title" value="{{old('title')}}">
                         @error('title')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

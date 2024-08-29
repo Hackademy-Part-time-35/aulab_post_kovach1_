@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -12,14 +14,29 @@ class ArticleController extends Controller implements HasMiddleware
 {
 
     public static function middleware(){
-        return[new Middleware('auth',except: ['index', 'show']),];
+        return[new Middleware('auth',except: ['index', 'show', 'byCategory', 'byUser']),];
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $articles = Article::orderBy('created_at','desc')->get();
+        return view('article.index', compact('articles'));
+    }
+
+    public function byCategory(Category $category){
+        $articles = $category->articles()->orderBy('created_at', 'desc')->get();
+        return view('article.byCategory', compact('category', 'articles'));
+    }
+
+    public function articlesByUser(user $user)
+    {
+        // Obtiene los artículos escritos por el usuario seleccionado
+        $articles = Article::where('user_id', $user->id)->get();
+
+        // Retorna la vista con los artículos filtrados
+        return view('articles.redattore', compact('articles', 'user'));
     }
 
     /**
@@ -36,8 +53,8 @@ class ArticleController extends Controller implements HasMiddleware
     public function store(Request $request){
 
         $request->validate( [
-        'title' => 'required|unique: articles|min:5',
-        'subtitle' => 'required |min:5',
+        'title' => 'required|unique:articles|min:5',
+        'subtitle' => 'required|min:5',
         'body' => 'required|min:10',
         'image' => 'required|image',
         'category' => 'required',
@@ -50,7 +67,7 @@ class ArticleController extends Controller implements HasMiddleware
         'image' => $request->file('image')->store('public/images'),
         'category_id' => $request->category,
         'user_id' => Auth::user()->id,
-        ]);
+        ]); 
 
         return redirect(route('homepage'))->with('message', 'Articolo creato con successo');
     }
@@ -60,7 +77,7 @@ class ArticleController extends Controller implements HasMiddleware
      */
     public function show(Article $article)
     {
-        //
+        return view('article.show', compact('article'));
     }
 
     /**
