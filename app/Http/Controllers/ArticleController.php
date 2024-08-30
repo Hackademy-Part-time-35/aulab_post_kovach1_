@@ -21,22 +21,22 @@ class ArticleController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $articles = Article::orderBy('created_at','desc')->get();
+        $articles = Article::where('is_accepted', true)->orderBy('created_at','desc')->get();
         return view('article.index', compact('articles'));
     }
 
     public function byCategory(Category $category){
-        $articles = $category->articles()->orderBy('created_at', 'desc')->get();
+        $articles = $category->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
         return view('article.byCategory', compact('category', 'articles'));
     }
 
-    public function articlesByUser(user $user)
+    public function articleByUser(user $user)
     {
         // Obtiene los artículos escritos por el usuario seleccionado
-        $articles = Article::where('user_id', $user->id)->get();
+        $articles = $user->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
 
         // Retorna la vista con los artículos filtrados
-        return view('articles.redattore', compact('articles', 'user'));
+        return view('article.redattore', compact('articles', 'user'));
     }
 
     /**

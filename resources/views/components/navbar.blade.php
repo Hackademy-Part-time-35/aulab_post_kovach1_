@@ -21,7 +21,7 @@
                   <a class="nav-link" aria-current="page" href="{{route('article.index')}}">tutti gli articoli</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="#">Pricing</a>
+                  <a class="nav-link" aria-current="page" href="{{route('careers')}}">Lavora con noi</a>
               </li>
           </ul>
           <!-- Dropdown menu moved to the end -->
@@ -35,6 +35,13 @@
                     <form action="/logout" method="POST">
                         @csrf
                         <button type="submit" class="btn"> esci</button>
+                        @if (Auth::user()->is_admin)
+                            <li><a class="dropdown-item" href="{{route('admin.dashboard')}}">Dashboar admin</a></li>
+                        @endif
+                        @if (Auth::user()->is_revisor)
+                            <li><a class="dropdown-item" href="{{route('revisor.dashboard')}}">Dashboar revisor</a></li>
+                        @endif
+
                     </form>
                     @else
                         <a href="/login" class="btn">accedi</a>
