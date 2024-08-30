@@ -17,11 +17,19 @@
                   <a class="nav-link" href="{{route('article.create')}}">create</a>
               </li>
               @endauth
+
               <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="{{route('article.index')}}">tutti gli articoli</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="{{route('careers')}}">Lavora con noi</a>
+              </li>
+              <li class="nav-item">
+                <form action="{{ route('article.search') }}" method="GET" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Cerca tra gli articoli..." aria-label="Search">
+                    <button class="btn btn-outline-secondary" type="submit">Cerca</button>
+                </form>
+            
               </li>
           </ul>
           <!-- Dropdown menu moved to the end -->

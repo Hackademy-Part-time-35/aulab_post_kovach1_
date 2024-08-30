@@ -14,7 +14,7 @@ class ArticleController extends Controller implements HasMiddleware
 {
 
     public static function middleware(){
-        return[new Middleware('auth',except: ['index', 'show', 'byCategory', 'byUser']),];
+        return[new Middleware('auth',except: ['index', 'show', 'byCategory', 'byUser', 'articleSearch']),];
     }
     /**
      * Display a listing of the resource.
@@ -37,6 +37,13 @@ class ArticleController extends Controller implements HasMiddleware
 
         // Retorna la vista con los artículos filtrados
         return view('article.redattore', compact('articles', 'user'));
+    }
+
+    public function articleSearch(Request $request){
+        $query = $request->input('query');
+        $article = Article::search($query)->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+
+        return view('article.search-index', compact('articles', 'query'));
     }
 
     /**
