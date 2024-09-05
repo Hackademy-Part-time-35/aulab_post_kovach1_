@@ -1,8 +1,8 @@
 <x-layout>
-    <div class="container-fluid p-5 bg-secondary-subtle text-center">
+    <div class="container-fluid p-5 text-center">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h1 class="display-1">{{ $article->title }}</h1>
+                <h1 class="display-1 montserrat-medium">{{ $article->title }}</h1>
             </div>
         </div>
     </div>
@@ -15,9 +15,13 @@
                 
                 <div class="text-center">
                     <h2>{{ $article->subtitle }}</h2>
-                    <p class="fs-5">Categoria:
-                        <a href="{{route('article.byCategory', $article->category)}}" class="text-capitalize fw-bold text-muted">{{ $article->category->name }}</a>
-                    </p>
+                    @if ($article->category)
+                        <p class="fs-5">Categoria:
+                            <a href="{{route('article.byCategory', $article->category)}}" class="text-capitalize fw-bold text-muted">{{ $article->category->name }}</a>
+                        </p>
+                    @else
+                        <p class="small text-muted">Nessuna Categoria</p>
+                    @endif
     
                     <div class="text-muted my-3">
                         <p>Redatto il {{ $article->created_at->format('d/m/Y') }} da <a href="{{route('article.byUser', $article->user)}}" class="text-capitalize text-muted">{{ $article->user->name }}</a></p>
@@ -49,4 +53,5 @@
         </div>
     </div>
     
+    <x-footer />
 </x-layout>

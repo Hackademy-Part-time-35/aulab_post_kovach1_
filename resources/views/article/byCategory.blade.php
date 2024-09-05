@@ -1,8 +1,8 @@
 <x-layout>
-    <div class="container-fluid p-5 bg-secondary-subtle text-center">
+    <div class="container-fluid p-5  text-center">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h1 class="display-1 text-capitalize">{{ $category->name }}</h1>
+                <h1 class="display-1 text-capitalize montserrat-medium">{{ $category->name }}</h1>
             </div>
         </div>
     </div>
@@ -19,6 +19,13 @@
                             <p class="card-subtitle">{{ $article->subtitle }}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
+                            
+                            
+                            <p class="small text-muted my-0">
+                                @foreach ($article->tags as $tag)
+                                    #{{ $tag->name }}
+                                @endforeach
+                            </p>
                             <p>
                                 Redatto il {{ $article->created_at->format('d/m/Y') }} <br>
                                 da {{ $article->user->name }}
@@ -31,4 +38,5 @@
         </div>
     </div>
     
+    <x-footer />
 </x-layout>

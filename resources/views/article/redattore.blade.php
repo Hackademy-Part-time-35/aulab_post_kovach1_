@@ -1,9 +1,9 @@
 
 <x-layout>
-    <div class="container-fluid p-5 bg-secondary-subtle text-center">
+    <div class="container-fluid p-5text-center">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h1 class="display-1">Tutti gli articoli</h1>
+                <h1 class="display-1 montserrat-medium">Tutti gli articoli</h1>
             </div>
         </div>
     </div>  
@@ -18,9 +18,14 @@
                             <h5 class="card-title">{{ $article->title }}</h5>
                             <p class="card-subtitle">{{ $article->subtitle }}</p>
                             <p cl ass="small text-muted">
-                            <p class="small text-muted">Categoria:
-                                <a href="{{route('article.byCategory', $article->category)}}" class="text-capitalize text-muted">{{ $article->category->name }}</a>
-                            </p>
+                            
+                            @if ($article->category)
+                                <p class="small text-muted mt-auto">Categoria:
+                                    <a href="{{route('article.byCategory', $article->category)}}" class="text-capitalize text-muted">{{ $article->category->name }}</a>
+                                </p>
+                            @else
+                                <p class="small text-muted">Nessuna Categoria</p>
+                            @endif
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <p>
@@ -34,4 +39,5 @@
             @endforeach
         </div>
     </div>
+    <x-footer />
 </x-layout>

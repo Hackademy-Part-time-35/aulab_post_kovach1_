@@ -7,19 +7,16 @@ use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {return view('welcome');});
+
 // index
     Route::get('/', [PublicController::class, 'homepage'])->name('homepage');
-
 
 // article
     Route::get('/article/index', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/article/show/{article}', [ArticleController::class, 'show'])->name('article.show');
     Route::get('/article/category/{category}', [ArticleController::class, 'byCategory'])->name('article.byCategory');
     Route::get('/article/{user}', [ArticleController::class, 'articleByUser'])->name('article.byUser');
-
-    Route::get('/article/search', [ArticleController::class, 'articleSearch'])->name('article.search');
-
-
+    Route::get('/articolo/search', [ArticleController::class, 'articleSearch'])->name('article.search');
 
 // mail
     Route::get('/careers', [PublicController::class, 'careers'])->name('careers');
@@ -31,6 +28,14 @@ use Illuminate\Support\Facades\Route;
         Route::patch('/admin/{user}/set-admin', [AdminController::class, 'setAdmin'])->name('admin.setAdmin');
         Route::patch('/admin/{user}/set-revisor', [AdminController::class, 'setRevisor'])->name('admin.setRevisor');
         Route::patch('/admin/{user}/set-writer', [AdminController::class, 'setWriter'])->name('admin.setWriter');
+    // Tag
+        Route::put('/admin/edit/tag/{tag}', [AdminController::class, 'editTag'])->name('admin.editTag');
+        Route::delete('/admin/delete/tag/{tag}', [AdminController::class, 'deleteTag'])->name('admin.deleteTag');
+    // categoria
+        Route::put('/admin/edit/category/{category}', [AdminController::class, 'editCategory'])->name('admin.editCategory');
+        Route::delete('/admin/delete/category/{category}', [AdminController::class, 'deleteCategory'])->name('admin.deleteCategory');
+        Route::post('/admin/category/store', [AdminController::class, 'storeCategory'])->name('admin.storeCategory');
+        
     });
 
 //revisor
@@ -43,6 +48,6 @@ use Illuminate\Support\Facades\Route;
 
 // writer
     Route::middleware('writer')->group(function(){
-        Route::get('/article/create', [ArticleController::class, 'create'])->name('article.create');
         Route::post('/article/store', [ArticleController::class, 'store'])->name('article.store');
+        Route::get('/articolo/create', [ArticleController::class, 'create'])->name('article.create');
     });

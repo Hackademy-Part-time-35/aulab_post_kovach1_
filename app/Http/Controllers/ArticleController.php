@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -41,7 +42,7 @@ class ArticleController extends Controller implements HasMiddleware
 
     public function articleSearch(Request $request){
         $query = $request->input('query');
-        $article = Article::search($query)->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+        $articles = Article::search($query)->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
 
         return view('article.search-index', compact('articles', 'query'));
     }
@@ -65,6 +66,7 @@ class ArticleController extends Controller implements HasMiddleware
         'body' => 'required|min:10',
         'image' => 'required|image',
         'category' => 'required',
+        'tags' => 'required',
         ]);
         
         $article = Article::create( [
@@ -75,6 +77,20 @@ class ArticleController extends Controller implements HasMiddleware
         'category_id' => $request->category,
         'user_id' => Auth::user()->id,
         ]); 
+
+        $tags = explode(',', $request->tags);
+
+        foreach ($tags as $i => $tag) {
+            $tags[$i] = trim($tag);
+        }
+
+        foreach ($tags as $tag) {
+            $newTag = Tag::update0rCreate([
+                'name' => strtolower($tag)
+            ]);
+
+            $article->tags()->attach($newTag);
+        }
 
         return redirect(route('homepage'))->with('message', 'Articolo creato con successo');
     }

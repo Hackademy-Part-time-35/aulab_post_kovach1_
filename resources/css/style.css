@@ -1,2 +1,29 @@
 /* @import "bootstrap"; */
 
+/* .verdeClaro{
+    background-color: #C4E077;
+}; */
+
+.colorCard{
+    background-color: #DDE9FF;
+}
+
+.colornavbar{
+    background-color:#D0EAFF;
+}
+
+
+
+.montserrat-uniquifier {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+
+.montserrat-medium {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }

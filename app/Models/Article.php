@@ -8,7 +8,7 @@ use Laravel\Scout\Searchable;
 
 class Article extends Model
 {
-    use HasFactory, Searchable;
+    use Searchable, HasFactory; 
 
     protected $fillable = ['title', 'subtitle', 'body', 'image', 'user_id', 'category_id', 'is_accepted'];
 
@@ -18,6 +18,10 @@ class Article extends Model
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
     }
 
     public function toSearchableArray(){
