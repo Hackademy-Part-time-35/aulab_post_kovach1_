@@ -6,37 +6,37 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr class="d-lg-none my-2 text-white-50">
+            </li>
               <li class="nav-item">
                 @auth
               <li class="nav-item">
-                  <a class="nav-link" href="{{route('article.create')}}">create</a>
+                  <a class="nav-link" href="{{route('article.create')}}">Create</a>
+              </li>
+              <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                <hr class="d-lg-none my-2 text-white-50">
               </li>
               @endauth
 
               <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="{{route('article.index')}}">tutti gli articoli</a>
+                  <a class="nav-link" aria-current="page" href="{{route('article.index')}}">Tutti gli articoli</a>
+              </li>
+              <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                <hr class="d-lg-none my-2 text-white-50">
               </li>
               <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="{{route('careers')}}">Lavora con noi</a>
               </li>
+              <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                <hr class="d-lg-none my-2 text-white-50">
+              </li>
 
-
-                <ul class="navbar-nav ms-auto " >
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            
-                        </a>
-                        <ul class="dropdown-menu w-auto">
-                                      
-                            <li class="nav-item">
-                                <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="light" aria-pressed="false"><i class="bi bi-moon-fill"></i></button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="dark" aria-pressed="false"><i class="bi bi-sun-fill"></i></button>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+               
                     
 
 
@@ -50,10 +50,31 @@
               </li>
           </ul>
           <!-- Dropdown menu moved to the end -->
-          <ul class="navbar-nav ms-auto">
+          
+          <ul class="navbar-nav ms-auto"> 
+            <ul class="navbar-nav ms-auto " >
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="bd-theme" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            
+                        </a>
+                        <ul class="dropdown-menu w-auto">
+                                      
+                            <li class="nav-item">
+                                <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="light" aria-pressed="false"><i class="bi bi-moon-fill"></i></button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="dark" aria-pressed="false"><i class="bi bi-sun-fill"></i></button>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+          <li class="nav-item">
+            <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+            <hr class="d-lg-none my-2 text-white-50">
+          </li>
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown link
+                      Account
                   </a>
                   <ul class="dropdown-menu">
                     

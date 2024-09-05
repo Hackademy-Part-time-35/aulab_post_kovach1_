@@ -25,7 +25,7 @@
             </td>
             <td>{{$article->created_at->format('d/m/Y')}}</td>
             <td>
-                <a href="{{route('article.show')}}" class="btn btn-secondary">Leggi</a>
+                <a href="{{route('article.show', $article)}}" class="btn btn-secondary">Leggi</a>
                 <a href="{{route('article.edit', $article)}}" class="btn btn-secondary text-white">Modifica</a>
                 <form action="{{route('article.destroy', $article)}}" method="POST" class="d-inline">
                     @csrf
