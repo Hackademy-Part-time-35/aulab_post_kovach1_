@@ -54,16 +54,19 @@
           <ul class="navbar-nav ms-auto"> 
             <ul class="navbar-nav ms-auto " >
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="bd-theme" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i id="themeIcon" class="bi bi-moon-fill"></i>
                         </a>
-                        <ul class="dropdown-menu w-auto">
+                        <ul class="dropdown-menu dropdown-menu-end t-auto b-auto l-auto r-auto">
                                       
-                            <li class="nav-item">
-                                <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="light" aria-pressed="false"><i class="bi bi-moon-fill"></i></button>
+                            <li>
+                                <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="dark" aria-pressed="false"><i class="bi bi-moon-fill"></i> Dark</button>
                             </li>
-                            <li class="nav-item">
-                                <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="dark" aria-pressed="false"><i class="bi bi-sun-fill"></i></button>
+                            <li>
+                                <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="light" aria-pressed="false"><i class="bi bi-sun-fill"></i> Ligth</button>
+                            </li>
+                            <li>
+                              <button class="dropdown-item d-flex align-items-center w-auto" data-bs-theme-value="auto" aria-pressed="true"><i class="bi bi-circle-half"></i> Auto</button>
                             </li>
                         </ul>
                     </li>
@@ -76,7 +79,7 @@
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Account
                   </a>
-                  <ul class="dropdown-menu">
+                  <ul class="dropdown-menu dropdown-menu-end">
                     
                     @auth
                     <form action="/logout" method="POST">

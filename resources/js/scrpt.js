@@ -1,21 +1,7 @@
-// const temaOscuro = () => {
-//     document.querySelector("body").setAttribute("data-bs-theme", "dark");
-//     document.querySelector("#dl-icon").setAttribute("class", "bi bi-sun-fill");
-// }
-
-
-
-// const temaClaro = () => {
-//     document.querySelector("body").setAttribute("data-bs-theme", "light");
-//     document.querySelector("#dl-icon").setAttribute("class", "bi bi-moon-fill");
-// }
-
-
-// const cambiarTema = () => {
-//     document.querySelector("body").getAttribute("data-bs-theme") ===  "light"? temaOscuro() : temaClaro();   
-// }
 
 (() => {
+
+  'use strict'
     const getStoredTheme = () => localStorage.getItem('theme')
     const setStoredTheme = theme => localStorage.setItem('theme', theme)
   
@@ -87,3 +73,33 @@
         })
     })
   })()
+
+
+const themeIcon = document.getElementById('themeIcon');
+const text = document.getElementById('texto');
+
+
+ function changeIcon(mode) {
+  themeIcon.classList.remove('bi-moon-fill', 'bi-sun-fill', 'bi-circle-half');
+
+   if (mode === 'light') {
+     themeIcon.classList.add('bi-sun-fill');
+
+   } else if (mode === 'dark') {
+     themeIcon.classList.add('bi-moon-fill');
+     
+   } else if (mode === 'auto') {
+     themeIcon.classList.add('bi-circle-half');
+   }
+ }
+
+ document.querySelectorAll('[data-bs-theme-value]').forEach(button => {
+   button.addEventListener('click', function() {
+     document.querySelectorAll('[data-bs-theme-value]').forEach(btn => {
+       btn.setAttribute('aria-pressed', 'false');
+     });
+     this.setAttribute('aria-pressed', 'true');
+     const selectedMode = this.getAttribute('data-bs-theme-value');
+     changeIcon(selectedMode);
+   });
+ });
