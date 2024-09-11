@@ -20,7 +20,7 @@
             <td>{{$article->category->name ?? 'nessuna categoria'}}</td>
             <td>
                 @foreach ($article->tags as $tag)
-                    #{{$tag->name}}
+                    {{$tag->name}}
                 @endforeach
             </td>
             <td>{{$article->created_at->format('d/m/Y')}}</td>
@@ -30,7 +30,7 @@
                 <form action="{{route('article.destroy', $article)}}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button type="button" class="btn btn-danger">elimina</button>
+                    <button type="submit" class="btn btn-danger">elimina</button>
                 </form>
             </td>
         </tr>

@@ -103,3 +103,6 @@ const text = document.getElementById('texto');
      changeIcon(selectedMode);
    });
  });
+
+
+ 

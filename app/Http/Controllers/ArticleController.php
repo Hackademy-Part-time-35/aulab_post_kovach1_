@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -15,31 +14,31 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller implements HasMiddleware
 {
-
     public static function middleware(){
         return[new Middleware('auth',except: ['index', 'show', 'byCategory', 'byUser', 'articleSearch']),];
     }
 
+    // Muestra los artículos aceptados
     public function index()
     {
         $articles = Article::where('is_accepted', true)->orderBy('created_at','desc')->get();
         return view('article.index', compact('articles'));
     }
 
+    // Muestra los artículos por categoría
     public function byCategory(Category $category){
         $articles = $category->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
         return view('article.byCategory', compact('category', 'articles'));
     }
 
-    public function articleByUser(user $user)
+    // Muestra los artículos escritos por un usuario
+    public function articleByUser(User $user)
     {
-        // Obtiene los artículos escritos por el usuario seleccionado
         $articles = $user->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
-
-        // Retorna la vista con los artículos filtrados
         return view('article.redattore', compact('articles', 'user'));
     }
 
+    // Búsqueda de artículos
     public function articleSearch(Request $request){
         $query = $request->input('query');
         $articles = Article::search($query)->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
@@ -47,61 +46,62 @@ class ArticleController extends Controller implements HasMiddleware
         return view('article.search-index', compact('articles', 'query'));
     }
 
+    // Retorna la vista para crear un artículo
     public function create(){
         return view('article.create');
     }
 
+    // Almacena un nuevo artículo
     public function store(Request $request){
-
         $request->validate( [
-        'title' => 'required|unique:articles|min:5',
-        'subtitle' => 'required|min:5',
-        'body' => 'required|min:10',
-        'image' => 'required|image',
-        'category' => 'required',
-        'tags' => 'required',
+            'title' => 'required|unique:articles|min:5',
+            'subtitle' => 'required|min:5',
+            'body' => 'required|min:10',
+            'image' => 'required|image',
+            'category' => 'required',
+            'tags' => 'required',
         ]);
-        
+
         $article = Article::create( [
-        'title' => $request->title,
-        'subtitle' => $request->subtitle,
-        'body' => $request->body,
-        'image' => $request->file('image')->store('public/images'),
-        'category_id' => $request->category,
-        'user_id' => Auth::user()->id,
-        'slug' => Str::slug($request->title),
-        ]); 
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'body' => $request->body,
+            'image' => $request->file('image')->store('public/images'),
+            'category_id' => $request->category,
+            'user_id' => Auth::user()->id,
+            'slug' => Str::slug($request->title),
+        ]);
 
+        // Procesa los tags
         $tags = explode(',', $request->tags);
-
         foreach ($tags as $i => $tag) {
             $tags[$i] = trim($tag);
         }
 
         foreach ($tags as $tag) {
-            $newTag = Tag::update0rCreate([
-                'name' => strtolower($tag)
-            ]);
-
+            $newTag = Tag::updateOrCreate(['name' => strtolower($tag)]);
             $article->tags()->attach($newTag);
         }
 
         return redirect(route('homepage'))->with('message', 'Articolo creato con successo');
     }
 
+    // Muestra un artículo
     public function show(Article $article)
     {
         return view('article.show', compact('article'));
     }
 
+    // Edita un artículo si el usuario es el autor
     public function edit(Article $article)
     {
-        if (Auth::user()->id == $article->user_id) {
-
+        if (Auth::user()->id != $article->user_id) {
             return redirect()->route('homepage')->with('alert', 'Accesso non consentito');
         }
+        return view('article.edit', compact('article'));
     }
 
+    // Actualiza un artículo
     public function update(Request $request, Article $article)
     {
         $request->validate([
@@ -121,6 +121,7 @@ class ArticleController extends Controller implements HasMiddleware
             'slug' => Str::slug($request->title),
         ]);
 
+        // Si se sube una nueva imagen, elimina la anterior
         if ($request->image) {
             Storage::delete($article->image);
             $article->update([
@@ -128,26 +129,23 @@ class ArticleController extends Controller implements HasMiddleware
             ]);
         }
 
+        // Actualiza los tags
         $tags = explode(',', $request->tags);
-
         foreach ($tags as $i => $tag) {
             $tags[$i] = trim($tag);
         }
 
         $newTags = [];
-
         foreach ($tags as $tag) {
-            $newTag = Tag::updateOrCreate([
-                'name' => strtolower($tag)
-            ]);
+            $newTag = Tag::updateOrCreate(['name' => strtolower($tag)]);
             $newTags[] = $newTag->id;
         }
-
         $article->tags()->sync($newTags);
 
         return redirect(route('writer.dashboard'))->with('message', 'Articolo modificato con successo');
     }
 
+    // Elimina un artículo
     public function destroy(Article $article)
     {
         foreach ($article->tags as $tag) {

@@ -1,14 +1,3 @@
-{{-- <hr>
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <h2>tutti i tags</h2>
-            <x-metainfo_table :metaInfos="$tags" metaType="tags"/>
-        </div>
-    </div>
-</div> --}}
-
-
 <table class="table table-striped table-hover">
     <thead class="table-dark">
         <tr>
@@ -25,6 +14,8 @@
                 <th scope="row">{{ $metaInfo->id }}</th>
                 <td>{{ $metaInfo->name }}</td>
                 <td>{{ count($metaInfo->articles) }}</td>
+
+                <!-- Si el tipo de metadata es 'tags', muestra el formulario para editar o eliminar tags -->
                 @if ($metaType == 'tags')
                     <td>
                         <form action="{{ route('admin.editTag', ['tag' => $metaInfo ]) }}" method="POST">
@@ -42,6 +33,7 @@
                         </form>
                     </td>
                 @else
+                    <!-- Si el tipo de metadata es 'category', muestra el formulario para editar o eliminar categorías -->
                     <td>
                         <form action="{{ route('admin.editCategory', ['category' => $metaInfo ]) }}" method="POST">
                             @csrf
@@ -57,7 +49,6 @@
                             <button type="submit" class="btn btn-danger">Elimina</button>
                         </form>
                     </td>
-                    
                 @endif
             </tr>
         @endforeach

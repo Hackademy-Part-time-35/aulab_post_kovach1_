@@ -9,7 +9,6 @@
         </tr>
     </thead>
     <tbody>
-
         @foreach ($articles as $article)
         <tr>
             <th scope="row">{{$article->id}}</th>
@@ -17,16 +16,20 @@
             <td>{{$article->subtitle}}</td>
             <td>{{$article->user->name}}</td>
             <td>
-                @if(is_null($article->is_accepted))
-                    <a href="{{route('article.show', $article)}}" class="btn btn-secondary">Leggi l'articolo</a>
-                @else
-                    <form action="{{route('revisor.undoArticle', $article)}}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-secondary">Riporta in revisione</button>
-                    </form>
-                @endif
+                <!-- Verifica si el artículo ha sido aceptado o no -->
+                    @if(is_null($article->is_accepted))
+                        <!-- Si no ha sido aceptado, muestra un botón para leer el artículo -->
+                            <a href="{{route('article.show', $article)}}" class="btn btn-secondary">Leggi l'articolo</a>
+                    @else
+                        <!-- Si ha sido aceptado, permite enviarlo de vuelta a revisión -->
+                            <form action="{{route('revisor.undoArticle', $article)}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-secondary">Riporta in revisione</button>
+                            </form>
+                    @endif
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+

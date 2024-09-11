@@ -9,17 +9,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserIsRevisor
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
+    // Verifica si el usuario autenticado es revisor
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::user() && Auth::user()->is_revisor) {
             return $next($request);
         }
         
+        // Redirige a la página de inicio si no es autorizado
         return redirect(route('homepage'))->with('alert', 'non sei autorizzato');
     }
 }

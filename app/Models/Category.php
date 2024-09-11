@@ -9,9 +9,12 @@ class Category extends Model
 {
     use HasFactory;
 
+    // Define los campos que pueden ser asignados masivamente
     protected $fillable = ['name'];
 
+    // Relación: Una categoría tiene muchos artículos
     public function articles(){
         return $this->hasMany(Article::class);
     }
 }
+
