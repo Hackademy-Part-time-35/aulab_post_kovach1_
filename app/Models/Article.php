@@ -38,7 +38,7 @@ class Article extends Model
 
     // Define que la clave de búsqueda en las rutas es el slug
     public function getRouteKeyName()
-    {
+    { 
         return 'slug';
     }
 
@@ -49,6 +49,7 @@ class Article extends Model
             'title' => $this->title,
             'subtitle' => $this->subtitle,
             'body' => $this->body,
+            'user_name' => $this->user->name, 
             'category' => $this->category,
         ];
     }
